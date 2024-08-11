@@ -7,7 +7,7 @@ dotenv.config();
 const port = process.env.PORT;
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "http://localhost:5173",
   optionsSuccessStatus: 200,
 };
 
@@ -16,15 +16,6 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-});
-
-async function getFlashCards() {
-  const [rows] = await pool.query("SELECT * FROM flashcards");
-  return rows;
-}
-
-getFlashCards().then((result) => {
-  console.log(result);
 });
 
 const app = express();
