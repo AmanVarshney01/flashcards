@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 app.get("/api/flashcards", async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM flashcards");
-    res.json(rows);
+    res.status(200).json(rows);
   } catch (error) {
     console.error("Error fetching flashcards", error);
     res.status(500).json({ message: "Internal Server Error" });
