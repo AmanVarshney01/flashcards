@@ -24,7 +24,10 @@ export default function Admin() {
       <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {data &&
           data.map((flashcard: flashcard) => (
-            <Card className="flex h-full flex-col justify-around">
+            <Card
+              key={flashcard.id}
+              className="flex h-full flex-col justify-around"
+            >
               <CardHeader>
                 <CardTitle className="text-lg">{flashcard.question}</CardTitle>
               </CardHeader>
@@ -33,10 +36,17 @@ export default function Admin() {
                   <p className="line-clamp-1">{flashcard.answer}</p>
                 </CardContent>
                 <CardFooter className="flex flex-row justify-between gap-2">
-                  <p className="text-nowrap">ID: {flashcard.id}</p>
+                  <p className="text-nowrap">{flashcard.id}</p>
                   <div className="flex flex-row gap-2">
-                    <EditFlashcardSheet />
-                    <DeleteFlashcardSheet />
+                    <EditFlashcardSheet
+                      id={flashcard.id}
+                      question={flashcard.question}
+                      description={flashcard.description}
+                      answer={flashcard.answer}
+                      language={flashcard.language}
+                      code={flashcard.code}
+                    />
+                    <DeleteFlashcardSheet flashcardId={flashcard.id} />
                   </div>
                 </CardFooter>
               </div>

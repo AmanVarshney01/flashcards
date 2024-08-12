@@ -4,4 +4,5 @@ export type flashcard = {
   answer: string;
   code?: string;
   description?: string;
-}
+  language?: string;
+};

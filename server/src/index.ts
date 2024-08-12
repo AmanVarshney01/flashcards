@@ -34,12 +34,12 @@ app.get("/api/flashcards", async (req, res) => {
 
 app.post("/api/flashcards", async (req, res) => {
   try {
-    const { question, answer } = req.body;
-    const [result] = await pool.query<ResultSetHeader>(
-      "INSERT INTO flashcards (question, answer) VALUES (?, ?)",
-      [question, answer]
+    const { question, description, answer, language, code} = req.body;
+    await pool.query<ResultSetHeader>(
+      "INSERT INTO flashcards (question, description, answer, language, code) VALUES (?, ?, ?, ?, ?)",
+      [question, description, answer, language, code]
     );
-    res.status(201).json({ id: result.insertId, question, answer });
+    res.status(201);
   } catch (error) {
     console.error("Error creating flashcard", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -49,10 +49,10 @@ app.post("/api/flashcards", async (req, res) => {
 app.put("/api/flashcards/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { question, answer } = req.body;
+    const { question, description, answer, language, code} = req.body;
     await pool.query(
-      "UPDATE flashcards SET question = ?, answer = ? WHERE id = ?",
-      [question, answer, id]
+      "UPDATE flashcards SET question = ?, description = ?, answer = ?, language = ?, code = ? WHERE id = ?",
+      [question, description, answer, language, code, id]
     );
     res.json({ message: "Flashcard updated successfully" });
   } catch (error) {

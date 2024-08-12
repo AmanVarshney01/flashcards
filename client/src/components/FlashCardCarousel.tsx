@@ -24,9 +24,10 @@ export default function FlashCardCarousel() {
               <CarouselItem key={flashcard.id}>
                 <FlashCard
                   question={flashcard.question}
-                  answer={flashcard.answer}
-                  code={flashcard.code}
                   description={flashcard.description}
+                  answer={flashcard.answer}
+                  language={flashcard.language}
+                  code={flashcard.code}
                 />
               </CarouselItem>
             );

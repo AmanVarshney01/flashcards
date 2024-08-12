@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -24,9 +25,10 @@ import { useCreateFlashcard } from "@/queries";
 
 const formSchema = z.object({
   question: z.string(),
-  answer: z.string(),
-  code: z.string().optional(),
   description: z.string().optional(),
+  answer: z.string(),
+  language: z.string().optional(),
+  code: z.string().optional(),
 });
 
 export default function AddFlashcardSheet() {
@@ -36,9 +38,10 @@ export default function AddFlashcardSheet() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       question: "",
-      answer: "",
-      code: "",
       description: "",
+      answer: "",
+      language: "",
+      code: "",
     },
   });
 
@@ -56,6 +59,9 @@ export default function AddFlashcardSheet() {
       <SheetContent>
         <SheetHeader className="pb-6">
           <SheetTitle>Add Flashcard</SheetTitle>
+          <SheetDescription>
+            Add a new flashcard to the collection.
+          </SheetDescription>
         </SheetHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -67,6 +73,22 @@ export default function AddFlashcardSheet() {
                   <FormLabel>Question</FormLabel>
                   <FormControl>
                     <Input placeholder="What is Linked List?" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Linked List is a data structure (optional)"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,15 +112,12 @@ export default function AddFlashcardSheet() {
             />
             <FormField
               control={form.control}
-              name="code"
+              name="language"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Code</FormLabel>
+                  <FormLabel>Language</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="const x = 10; (optional)"
-                      {...field}
-                    />
+                    <Input placeholder="Typescript" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,13 +125,13 @@ export default function AddFlashcardSheet() {
             />
             <FormField
               control={form.control}
-              name="description"
+              name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Code</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Linked List is a data structure (optional)"
+                      placeholder="const x = 10; (optional)"
                       {...field}
                     />
                   </FormControl>

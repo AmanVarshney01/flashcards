@@ -12,6 +12,7 @@ export default function FlashCard({
   answer,
   code,
   description,
+  language
 }: Omit<flashcard, "id">) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -65,7 +66,7 @@ export default function FlashCard({
                 </h4>
               </div>
               {code && (
-                <SyntaxHighlighter language="javascript" style={a11yDark}>
+                <SyntaxHighlighter language={language} style={a11yDark}>
                   {code}
                 </SyntaxHighlighter>
               )}
