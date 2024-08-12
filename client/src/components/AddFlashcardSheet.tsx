@@ -15,13 +15,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useCreateFlashcard } from "@/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { useCreateFlashcard } from "@/queries";
 
 const formSchema = z.object({
   question: z.string(),
@@ -32,6 +33,8 @@ const formSchema = z.object({
 });
 
 export default function AddFlashcardSheet() {
+  const [open, setOpen] = useState(false);
+
   const createFlashcard = useCreateFlashcard();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,10 +49,11 @@ export default function AddFlashcardSheet() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createFlashcard.mutate(values)
+    createFlashcard.mutate(values);
+    setOpen(false);
   }
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <Button variant={"secondary"} size={"sm"}>
           <Plus className="mr-1" size={14} />

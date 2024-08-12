@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import { useDeleteFlashcard } from "@/queries";
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 
 export default function DeleteFlashcardSheet({
@@ -15,9 +16,17 @@ export default function DeleteFlashcardSheet({
 }: {
   flashcardId: number;
 }) {
+  const [open, setOpen] = useState(false);
+
   const deleteFlashcard = useDeleteFlashcard();
+
+  function onSubmit(flashcardId: number) {
+    deleteFlashcard.mutate(flashcardId);
+    setOpen(false);
+  }
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <Button variant={"secondary"} size={"sm"}>
           <Trash2 className="mr-1" size={14} />
@@ -32,10 +41,7 @@ export default function DeleteFlashcardSheet({
             {flashcardId}?
           </SheetDescription>
         </SheetHeader>
-        <Button
-          variant={"destructive"}
-          onClick={() => deleteFlashcard.mutate(flashcardId)}
-        >
+        <Button variant={"destructive"} onClick={() => onSubmit(flashcardId)}>
           Delete
         </Button>
       </SheetContent>

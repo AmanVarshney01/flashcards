@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import { useState } from "react";
 
 const formSchema = z.object({
   question: z.string(),
@@ -42,23 +43,26 @@ export default function EditFlashcardSheet({
   language,
 }: flashcard) {
   const updateFlashcard = useUpdateFlashcard();
+  const [open, setOpen] = useState(false);
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       question: question,
-      description: description,
+      description: description || "",
       answer: answer,
-      language: language,
-      code: code,
+      language: language || "",
+      code: code || "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     updateFlashcard.mutate({ id, ...values });
+    setOpen(false);
   }
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <Button variant={"secondary"} size={"sm"}>
           <Edit className="mr-1" size={14} />

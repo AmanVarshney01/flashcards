@@ -12,7 +12,7 @@ export default function FlashCard({
   answer,
   code,
   description,
-  language
+  language,
 }: Omit<flashcard, "id">) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -23,7 +23,7 @@ export default function FlashCard({
 
   return (
     <div
-      className="perspective-1000 mx-auto flex h-[60vh] max-w-4xl cursor-pointer items-center justify-center p-4 sm:h-[70vh] sm:p-6 md:h-[80vh] md:p-8 lg:p-10"
+      className="perspective-1000 mx-auto flex h-[80vh] w-full max-w-7xl cursor-pointer items-center justify-center p-4 sm:w-[90vw] sm:p-6 md:w-[80vw] md:p-8 lg:w-[70vw] lg:p-10 xl:w-[60vw] 2xl:w-[50vw]"
       onClick={handleFlip}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -45,6 +45,19 @@ export default function FlashCard({
             <p className="text-sm text-gray-600 dark:text-gray-300 sm:text-base md:text-lg">
               {description}
             </p>
+            {code && (
+              <div className="rounded-lg bg-gray-100 p-4 dark:bg-gray-800">
+                <div className="mb-2 flex items-center">
+                  <Code className="mr-2 text-gray-500 dark:text-gray-400" />
+                  <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    Code Example
+                  </h4>
+                </div>
+                <SyntaxHighlighter language={language} style={a11yDark}>
+                  {code}
+                </SyntaxHighlighter>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -58,19 +71,6 @@ export default function FlashCard({
             <p className="mb-6 text-sm text-gray-700 dark:text-gray-300 sm:text-base md:text-lg">
               {answer}
             </p>
-            <div className="rounded-lg bg-gray-100 p-4 dark:bg-gray-800">
-              <div className="mb-2 flex items-center">
-                <Code className="mr-2 text-gray-500 dark:text-gray-400" />
-                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-                  Code Example
-                </h4>
-              </div>
-              {code && (
-                <SyntaxHighlighter language={language} style={a11yDark}>
-                  {code}
-                </SyntaxHighlighter>
-              )}
-            </div>
           </CardContent>
         </Card>
       </motion.div>

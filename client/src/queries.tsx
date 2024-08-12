@@ -30,7 +30,7 @@ export const useCreateFlashcard = () => {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+      return queryClient.invalidateQueries({ queryKey: ["flashcards"] });
     },
   });
 };
@@ -53,7 +53,7 @@ export const useUpdateFlashcard = () => {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+      return queryClient.invalidateQueries({ queryKey: ["flashcards"] });
     },
   });
 };
@@ -68,7 +68,7 @@ export const useDeleteFlashcard = () => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+      return queryClient.invalidateQueries({ queryKey: ["flashcards"] });
     },
   });
 };
