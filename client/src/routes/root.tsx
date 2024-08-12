@@ -1,24 +1,24 @@
 import { Button } from "@/components/ui/button";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import tufLogo from "/tuf-logo.svg";
 
 export default function Root() {
   return (
     <>
-      <div className="min-h-dvh grid grid-rows-[auto_1fr]">
-        <div className="px-2 py-4 flex gap-2 items-center">
+      <div className="grid min-h-dvh grid-rows-[auto_1fr]">
+        <div className="flex items-center gap-2 px-2 py-4">
           <div>
             <img src={tufLogo} />
           </div>
           <Button variant={"ghost"} asChild>
-            <Link to="/" className="[&.active]:text-primary">
+            <NavLink to="/" className="[&.active]:text-primary">
               Home
-            </Link>
+            </NavLink>
           </Button>
           <Button variant={"ghost"} asChild>
-            <Link to="/admin" className="[&.active]:text-primary">
+            <NavLink to="/admin" className="[&.active]:text-primary">
               Admin
-            </Link>
+            </NavLink>
           </Button>
         </div>
         <Outlet />
