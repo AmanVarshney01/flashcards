@@ -1,3 +1,4 @@
+import { flashcard } from "@/lib/types";
 import { motion } from "framer-motion";
 import { ChevronRight, Code } from "lucide-react";
 import { useState } from "react";
@@ -11,12 +12,7 @@ export default function FlashCard({
   answer,
   code,
   description,
-}: {
-  question: string;
-  answer: string;
-  code: string;
-  description: string;
-}) {
+}: Omit<flashcard, "id">) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -68,9 +64,11 @@ export default function FlashCard({
                   Code Example
                 </h4>
               </div>
-              <SyntaxHighlighter language="javascript" style={a11yDark}>
-                {code}
-              </SyntaxHighlighter>
+              {code && (
+                <SyntaxHighlighter language="javascript" style={a11yDark}>
+                  {code}
+                </SyntaxHighlighter>
+              )}
             </div>
           </CardContent>
         </Card>

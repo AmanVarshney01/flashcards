@@ -9,15 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { flashcard } from "@/lib/types";
-import { getFlashcards } from "@/queries";
-import { useQuery } from "@tanstack/react-query";
+import { useFlashcards } from "@/queries";
 
 export default function Admin() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["flashcards"],
-    queryFn: getFlashcards,
-  });
-
+  const { data, isLoading, error } = useFlashcards();
   return (
     <div className="p-2">
       <div className="flex flex-row justify-between p-4">

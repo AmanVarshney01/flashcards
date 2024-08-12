@@ -1,6 +1,4 @@
-import { flashcard } from "@/lib/types";
-import { getFlashcards } from "@/queries";
-import { useQuery } from "@tanstack/react-query";
+import { useFlashcards } from "@/queries";
 import FlashCard from "./FlashCard";
 import {
   Carousel,
@@ -11,12 +9,7 @@ import {
 } from "./ui/carousel";
 
 export default function FlashCardCarousel() {
-  const { data, isLoading, error } = useQuery<flashcard[]>({
-    queryKey: ["flashcards"],
-    queryFn: getFlashcards,
-  });
-
-  console.log(data);
+  const { data, isLoading, error } = useFlashcards();
 
   if (isLoading) return <div>Loading...</div>;
 
