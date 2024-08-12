@@ -7,8 +7,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   Sheet,
   SheetContent,
@@ -19,12 +17,14 @@ import {
 } from "@/components/ui/sheet";
 import { flashcard } from "@/lib/types";
 import { useUpdateFlashcard } from "@/queries";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { useState } from "react";
 
 const formSchema = z.object({
   question: z.string(),
@@ -45,7 +45,6 @@ export default function EditFlashcardSheet({
   const updateFlashcard = useUpdateFlashcard();
   const [open, setOpen] = useState(false);
 
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,6 +58,7 @@ export default function EditFlashcardSheet({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     updateFlashcard.mutate({ id, ...values });
+    toast.success("Flashcard updated successfully");
     setOpen(false);
   }
   return (

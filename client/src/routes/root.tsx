@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import { NavLink, Outlet } from "react-router-dom";
 import tufLogo from "/tuf-logo.svg";
 
@@ -22,6 +23,7 @@ export default function Root() {
           </Button>
         </div>
         <Outlet />
+        <Toaster richColors />
       </div>
     </>
   );

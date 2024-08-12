@@ -10,6 +10,8 @@ import { useDeleteFlashcard } from "@/queries";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { toast } from "sonner"
+
 
 export default function DeleteFlashcardSheet({
   flashcardId,
@@ -22,6 +24,7 @@ export default function DeleteFlashcardSheet({
 
   function onSubmit(flashcardId: number) {
     deleteFlashcard.mutate(flashcardId);
+    toast.success("Flashcard deleted successfully");
     setOpen(false);
   }
 

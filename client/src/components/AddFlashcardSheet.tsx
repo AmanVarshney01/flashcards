@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
@@ -50,6 +51,7 @@ export default function AddFlashcardSheet() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     createFlashcard.mutate(values);
+    toast.success("Flashcard created successfully");
     setOpen(false);
   }
   return (
