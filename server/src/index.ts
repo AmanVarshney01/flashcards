@@ -34,12 +34,12 @@ app.get("/api/flashcards", async (req, res) => {
 
 app.post("/api/flashcards", async (req, res) => {
   try {
-    const { question, description, answer, language, code} = req.body;
+    const { question, description, answer, language, code } = req.body;
     await pool.query<ResultSetHeader>(
       "INSERT INTO flashcards (question, description, answer, language, code) VALUES (?, ?, ?, ?, ?)",
       [question, description, answer, language, code]
     );
-    res.status(201);
+    res.status(201).json({ message: "Flashcard created successfully" });
   } catch (error) {
     console.error("Error creating flashcard", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -49,12 +49,12 @@ app.post("/api/flashcards", async (req, res) => {
 app.put("/api/flashcards/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { question, description, answer, language, code} = req.body;
+    const { question, description, answer, language, code } = req.body;
     await pool.query(
       "UPDATE flashcards SET question = ?, description = ?, answer = ?, language = ?, code = ? WHERE id = ?",
       [question, description, answer, language, code, id]
     );
-    res.json({ message: "Flashcard updated successfully" });
+    res.status(204).json({ message: "Flashcard updated successfully" });
   } catch (error) {
     console.error("Error updating flashcard:", error);
     res.status(500).json({ error: "Error updating flashcard" });
@@ -65,7 +65,7 @@ app.delete("/api/flashcards/:id", async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query("DELETE FROM flashcards WHERE id = ?", [id]);
-    res.json({ message: "Flashcard deleted successfully" });
+    res.status(200).json({ message: "Flashcard deleted successfully" });
   } catch (error) {
     console.error("Error deleting flashcard:", error);
     res.status(500).json({ error: "Error deleting flashcard" });

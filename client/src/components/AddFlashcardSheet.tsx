@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sheet";
 import { useCreateFlashcard } from "@/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -34,6 +35,7 @@ const formSchema = z.object({
 });
 
 export default function AddFlashcardSheet() {
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
 
   const createFlashcard = useCreateFlashcard();
@@ -50,9 +52,14 @@ export default function AddFlashcardSheet() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createFlashcard.mutate(values);
-    toast.success("Flashcard created successfully");
-    setOpen(false);
+    createFlashcard.mutate(values, {
+      onSuccess: () => {
+        toast.success("Flashcard created successfully");
+        form.reset();
+        setOpen(false);
+        queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+      },
+    });
   }
   return (
     <Sheet open={open} onOpenChange={setOpen}>

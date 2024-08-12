@@ -7,24 +7,31 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useDeleteFlashcard } from "@/queries";
+import { useQueryClient } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "./ui/button";
-import { toast } from "sonner"
-
 
 export default function DeleteFlashcardSheet({
   flashcardId,
 }: {
   flashcardId: number;
 }) {
+  const queryClient = useQueryClient();
+
   const [open, setOpen] = useState(false);
 
   const deleteFlashcard = useDeleteFlashcard();
 
   function onSubmit(flashcardId: number) {
-    deleteFlashcard.mutate(flashcardId);
-    toast.success("Flashcard deleted successfully");
+    deleteFlashcard.mutate(flashcardId, {
+      onSuccess: () => {
+        toast.success("Flashcard deleted successfully");
+        setOpen(false);
+        queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+      },
+    });
     setOpen(false);
   }
 

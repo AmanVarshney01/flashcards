@@ -18,6 +18,7 @@ import {
 import { flashcard } from "@/lib/types";
 import { useUpdateFlashcard } from "@/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -42,6 +43,7 @@ export default function EditFlashcardSheet({
   description,
   language,
 }: flashcard) {
+  const queryClient = useQueryClient();
   const updateFlashcard = useUpdateFlashcard();
   const [open, setOpen] = useState(false);
 
@@ -57,9 +59,16 @@ export default function EditFlashcardSheet({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    updateFlashcard.mutate({ id, ...values });
-    toast.success("Flashcard updated successfully");
-    setOpen(false);
+    updateFlashcard.mutate(
+      { id, ...values },
+      {
+        onSuccess: () => {
+          toast.success("Flashcard updated successfully");
+          setOpen(false);
+          queryClient.invalidateQueries({ queryKey: ["flashcards"] });
+        },
+      },
+    );
   }
   return (
     <Sheet open={open} onOpenChange={setOpen}>
