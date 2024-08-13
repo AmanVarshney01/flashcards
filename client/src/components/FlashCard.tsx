@@ -23,7 +23,7 @@ export default function FlashCard({
 
   return (
     <div
-      className="perspective-1000 mx-auto flex h-[80vh] w-full max-w-7xl cursor-pointer items-center justify-center p-4 sm:w-[90vw] sm:p-6 md:w-[80vw] md:p-8 lg:w-[70vw] lg:p-10 xl:w-[60vw] 2xl:w-[50vw]"
+      className="perspective-1000 mx-auto flex h-[70vh] cursor-pointer items-center justify-center p-4"
       onClick={handleFlip}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -34,26 +34,32 @@ export default function FlashCard({
       >
         <Card className="backface-hidden absolute h-full w-full overflow-auto bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900">
           <CardHeader className="border-b border-gray-200 dark:border-gray-700">
-            <CardTitle className="text-lg text-blue-600 dark:text-blue-400 sm:text-xl md:text-2xl lg:text-3xl">
+            <CardTitle className="text-lg text-blue-600 dark:text-blue-400 md:text-2xl">
               Question
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
-            <h3 className="mb-4 text-base font-semibold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl">
+          <CardContent className="p-4 sm:p-6">
+            <h3 className="mb-4 text-base font-semibold text-gray-800 dark:text-gray-200 md:text-2xl">
               {question}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300 sm:text-base md:text-lg">
+            <p className="text-xs text-gray-600 dark:text-gray-300 sm:text-sm md:text-base lg:text-lg">
               {description}
             </p>
             {code && (
-              <div className="rounded-lg bg-gray-100 p-4 dark:bg-gray-800">
+              <div className="mt-4 rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
                 <div className="mb-2 flex items-center">
-                  <Code className="mr-2 text-gray-500 dark:text-gray-400" />
-                  <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-                    Code Example
-                  </h4>
+                  <Code className="text-gray-500 dark:text-gray-400" />
                 </div>
-                <SyntaxHighlighter language={language} style={a11yDark}>
+                <SyntaxHighlighter
+                  language={language}
+                  style={a11yDark}
+                  wrapLines={true}
+                  wrapLongLines={true}
+                  customStyle={{
+                    fontSize: "0.8rem",
+                    borderRadius: "0.5rem",
+                  }}
+                >
                   {code}
                 </SyntaxHighlighter>
               </div>
@@ -63,12 +69,12 @@ export default function FlashCard({
 
         <Card className="backface-hidden rotate-y-180 absolute h-full w-full transform overflow-auto bg-gradient-to-br from-green-50 to-emerald-100 dark:from-gray-800 dark:to-gray-900">
           <CardHeader className="border-b border-gray-200 dark:border-gray-700">
-            <CardTitle className="text-lg text-green-600 dark:text-green-400 sm:text-xl md:text-2xl lg:text-3xl">
+            <CardTitle className="text-lg text-green-600 dark:text-green-400 sm:text-xl md:text-2xl">
               Answer
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
-            <p className="mb-6 text-sm text-gray-700 dark:text-gray-300 sm:text-base md:text-lg">
+          <CardContent className="p-4 sm:p-6">
+            <p className="text-base text-gray-700 dark:text-gray-300 lg:text-lg">
               {answer}
             </p>
           </CardContent>
@@ -80,7 +86,10 @@ export default function FlashCard({
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       >
-        <Button variant="secondary" className="group bg-opacity-70">
+        <Button
+          variant="secondary"
+          className="group bg-opacity-70 text-xs sm:text-sm md:text-base"
+        >
           {isFlipped ? "View Question" : "Reveal Answer"}
           <ChevronRight className="ml-2 transition-transform group-hover:translate-x-1" />
         </Button>

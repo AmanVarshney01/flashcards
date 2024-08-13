@@ -16,12 +16,12 @@ export default function FlashCardCarousel() {
   if (error) return <div>An error occurred: {error.message}</div>;
 
   return (
-    <Carousel className="flex flex-col gap-4">
+    <Carousel className="flex flex-col gap-4 w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-3xl">
       <CarouselContent>
         {data &&
           data.map((flashcard) => {
             return (
-              <CarouselItem key={flashcard.id}>
+              <CarouselItem key={flashcard.id} className="">
                 <FlashCard
                   question={flashcard.question}
                   description={flashcard.description}
